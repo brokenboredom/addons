@@ -1,0 +1,84 @@
+<?xml version="1.1" ?>
+<settings>
+    <global>
+        <auto>true</auto>
+        <language>English</language>
+        <sets>
+            <ambu1_sahagin>
+                <1>Sylvie (UC)</1>
+                <2>AAEV</2>
+                <3>Joachim</3>
+                <4>Cherukiki</4>
+                <5>AATT</5>
+            </ambu1_sahagin>
+            <ambu2_pig>
+                <1>Sylvie (UC)</1>
+                <2>Amchuchu</2>
+                <3>Joachim</3>
+                <4>Cherukiki</4>
+                <5>Matsui-P</5>
+            </ambu2_pig>
+            <bluxp>
+                <1>Arciela</1>
+                <2>Sylvie (UC)</2>
+                <3>Ulmia</3>
+                <4>Qultada</4>
+                <5>Shantotto II</5>
+            </bluxp>
+            <default>
+                <1>Valaineral</1>
+                <2>Mihli Aliapoh</2>
+                <3>Tenzen</3>
+                <4>Adelheid</4>
+                <5>Joachim</5>
+            </default>
+            <dpblu>
+                <1>Sylvie (UC)</1>
+                <2>Arciela</2>
+                <3>Joachim</3>
+                <4>Lilisette II</4>
+                <5>Qultada</5>
+            </dpblu>
+            <dpsmn>
+                <1>Sylvie (UC)</1>
+                <2>AAMR</2>
+                <3>Iroha II</3>
+                <4>Shantotto II</4>
+                <5>Matsui-P</5>
+            </dpsmn>
+            <temp>
+                <1>Shantotto II</1>
+                <2>AAMR</2>
+                <3>Qultada</3>
+                <4>Ulmia</4>
+                <5>Sylvie (UC)</5>
+            </temp>
+            <xp>
+                <1>Kupofried</1>
+                <2>Shantotto II</2>
+                <3>AAMR</3>
+                <4>Qultada</4>
+                <5>Koru-Moru</5>
+            </xp>
+            <xp_aoe>
+                <1>Shantotto II</1>
+                <2>Gadalar</2>
+                <3>Qultada</3>
+                <4>Kupofried</4>
+                <5>AATT</5>
+            </xp_aoe>
+            <xpsmn>
+                <1>Sylvie (UC)</1>
+                <2>AAEV</2>
+                <3>Shantotto II</3>
+                <4>Joachim</4>
+                <5>Iroha II</5>
+            </xpsmn>
+        </sets>
+        <wait>
+            <aftercast>3</aftercast>
+            <retr>1.25</retr>
+            <retrall>3</retrall>
+        </wait>
+    </global>
+</settings>

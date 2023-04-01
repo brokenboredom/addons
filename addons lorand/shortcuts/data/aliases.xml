@@ -1,0 +1,151 @@
+<?xml version="1.1" ?>
+<settings>
+    <global>
+        <altep>Teleport-Altep</altep>
+        <aubade>Fowl Aubade</aubade>
+        <ballad>Mage&apos;s Ballad</ballad>
+        <ballad1>Mage&apos;s Ballad</ballad1>
+        <ballad2>Mage&apos;s Ballad II</ballad2>
+        <ballad3>Mage&apos;s Ballad III</ballad3>
+        <bl>Blink</bl>
+        <c1>Cure</c1>
+        <c2>Cure II</c2>
+        <c3>Cure III</c3>
+        <c4>Cure IV</c4>
+        <c5>Cure V</c5>
+        <c6>Cure VI</c6>
+        <capriccio>Gold Capriccio</capriccio>
+        <cel>Celerity</cel>
+        <cga1>Curaga</cga1>
+        <cga2>Curaga II</cga2>
+        <cga3>Curaga III</cga3>
+        <cga4>Curaga IV</cga4>
+        <cga5>Curaga V</cga5>
+        <cga6>Curaga VI</cga6>
+        <cw1>Curing Waltz</cw1>
+        <cw2>Curing Waltz II</cw2>
+        <cw3>Curing Waltz III</cw3>
+        <cw4>Curing Waltz IV</cw4>
+        <cw5>Curing Waltz V</cw5>
+        <d2>Warp II</d2>
+        <d3>Retrace</d3>
+        <da>Dark Arts</da>
+        <dem>Teleport-Dem</dem>
+        <ds>Divine Seal</ds>
+        <es>Elemental Seal</es>
+        <fantasia>Shining Fantasia</fantasia>
+        <gavotte>Goblin Gavotte</gavotte>
+        <grav>Gravity</grav>
+        <holla>Teleport-Holla</holla>
+        <hw>Healing Waltz</hw>
+        <hymnus>Goddess&apos;s Hymnus</hymnus>
+        <ichi>Utsusemi: Ichi</ichi>
+        <invis>Invisible</invis>
+        <jugner>Recall-Jugner</jugner>
+        <la>Light Arts</la>
+        <mad1>Sword Madrigal</mad1>
+        <mad2>Blade Madrigal</mad2>
+        <madrigal1>Sword Madrigal</madrigal1>
+        <madrigal2>Blade Madrigal</madrigal2>
+        <mambo1>Sheepfoe Mambo</mambo1>
+        <mambo2>Dragonfoe Mambo</mambo2>
+        <march1>Advancing March</march1>
+        <march2>Victory March</march2>
+        <mazurka1>Raptor Mazurka</mazurka1>
+        <mazurka2>Chocobo Mazurka</mazurka2>
+        <mea>Teleport-Mea</mea>
+        <meri>Recall-Meriph</meri>
+        <meriph>Recall-Meriph</meriph>
+        <min>Valor Minuet</min>
+        <min1>Valor Minuet</min1>
+        <min2>Valor Minuet II</min2>
+        <min3>Valor Minuet III</min3>
+        <min4>Valor Minuet IV</min4>
+        <min5>Valor Minuet V</min5>
+        <minne>Knight&apos;s Minne</minne>
+        <minne1>Knight&apos;s Minne</minne1>
+        <minne2>Knight&apos;s Minne II</minne2>
+        <minne3>Knight&apos;s Minne III</minne3>
+        <minne4>Knight&apos;s Minne IV</minne4>
+        <minne5>Knight&apos;s Minne V</minne5>
+        <minuet>Valor Minuet</minuet>
+        <minuet1>Valor Minuet</minuet1>
+        <minuet2>Valor Minuet II</minuet2>
+        <minuet3>Valor Minuet III</minuet3>
+        <minuet4>Valor Minuet IV</minuet4>
+        <minuet5>Valor Minuet V</minuet5>
+        <ni>Utsusemi: Ni</ni>
+        <operetta1>Scop&apos;s Operetta</operetta1>
+        <operetta2>Puppet&apos;s Operetta</operetta2>
+        <p1>Protect</p1>
+        <p2>Protect II</p2>
+        <p3>Protect III</p3>
+        <p4>Protect IV</p4>
+        <p5>Protect V</p5>
+        <paeon>Army&apos;s Paeon</paeon>
+        <paeon1>Army&apos;s Paeon</paeon1>
+        <paeon2>Army&apos;s Paeon II</paeon2>
+        <paeon3>Army&apos;s Paeon III</paeon3>
+        <paeon4>Army&apos;s Paeon IV</paeon4>
+        <paeon5>Army&apos;s Paeon V</paeon5>
+        <paeon6>Army&apos;s Paeon VI</paeon6>
+        <para>Paralyze</para>
+        <para2>Paralyze II</para2>
+        <pash>Recall-Pashh</pash>
+        <pashh>Recall-Pashh</pashh>
+        <pastoral>Herb Pastoral</pastoral>
+        <pen>Penury</pen>
+        <pga1>Protectra</pga1>
+        <pga2>Protectra II</pga2>
+        <pga3>Protectra III</pga3>
+        <pga4>Protectra IV</pga4>
+        <pga5>Protectra V</pga5>
+        <prelude1>Hunter&apos;s Prelude</prelude1>
+        <prelude2>Archer&apos;s Prelude</prelude2>
+        <pro1>Protectra</pro1>
+        <pro2>Protectra II</pro2>
+        <pro3>Protectra III</pro3>
+        <pro4>Protectra IV</pro4>
+        <pro5>Protectra V</pro5>
+        <r1>Raise</r1>
+        <r2>Raise II</r2>
+        <r3>Raise III</r3>
+        <re1>Regen</re1>
+        <re2>Regen II</re2>
+        <re3>Regen III</re3>
+        <re4>Regen IV</re4>
+        <re5>Regen V</re5>
+        <round>Warding Round</round>
+        <rr>Reraise</rr>
+        <rr1>Reraise</rr1>
+        <rr2>Reraise II</rr2>
+        <rr3>Reraise III</rr3>
+        <rr4>Reraise IV</rr4>
+        <s1>Shell</s1>
+        <s2>Shell II</s2>
+        <s3>Shell III</s3>
+        <s4>Shell IV</s4>
+        <s5>Shell V</s5>
+        <scherzo>Sentinel&apos;s Scherzo</scherzo>
+        <sga1>Shellra</sga1>
+        <sga2>Shellra II</sga2>
+        <sga3>Shellra III</sga3>
+        <sga4>Shellra IV</sga4>
+        <sga5>Shellra V</sga5>
+        <sh1>Shellra</sh1>
+        <sh2>Shellra II</sh2>
+        <sh3>Shellra III</sh3>
+        <sh4>Shellra IV</sh4>
+        <sh5>Shellra V</sh5>
+        <she1>Shellra</she1>
+        <she2>Shellra II</she2>
+        <she3>Shellra III</she3>
+        <she4>Shellra IV</she4>
+        <she5>Shellra V</she5>
+        <ss>Stoneskin</ss>
+        <utsu1>Utsusemi: Ichi</utsu1>
+        <utsu2>Utsusemi: Ni</utsu2>
+        <vahzl>Teleport-Vahzl</vahzl>
+        <yhoat>Teleport-Yhoat</yhoat>
+    </global>
+</settings>
