@@ -29,6 +29,28 @@
             <default>
 
             </default>
+            <melee>
+                <slot01>barbed crescent</slot01>
+                <slot02>delta thrust</slot02>
+                <slot03>molting plumage</slot03>
+                <slot04>erratic flutter</slot04>
+                <slot05>fantod</slot05>
+                <slot06>sudden lunge</slot06>
+                <slot07>nat. meditation</slot07>
+                <slot08>heavy strike</slot08>
+                <slot09>acrid stream</slot09>
+                <slot10>thrashing assault</slot10>
+                <slot11>paralyzing triad</slot11>
+                <slot12>sinker drill</slot12>
+                <slot13>barrier tusk</slot13>
+                <slot14>magic fruit</slot14>
+                <slot15>battery charge</slot15>
+                <slot16>cocoon</slot16>
+                <slot17>diffusion ray</slot17>
+                <slot18>anvil lightning</slot18>
+                <slot19>frightful roar</slot19>
+                <slot20>zephyr mantle</slot20>
+            </melee>
             <meleedps>
                 <slot01>sudden lunge</slot01>
                 <slot02>erratic flutter</slot02>

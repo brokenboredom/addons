@@ -2,13 +2,12 @@
 -- Setup functions for this job.  Generally should not be modified.
 -------------------------------------------------------------------------------------------------------------------
 
--- Initialization function for this job file.
 function get_sets()
     mote_include_version = 2
     
+    -- Load and initialize the include file.
     include('Mote-Include.lua')
 	include('organizer-lib')
-	organizer_items = {}
 end
 
 
@@ -21,14 +20,18 @@ function job_setup()
     state.Buff.Efflux = buffactive.Efflux or false
     
     state.Buff['Unbridled Learning'] = buffactive['Unbridled Learning'] or false
+    state.SkillMode = M{['description']='Skill Mode', 'Normal', 'On'}
+    
+    include('Mote-TreasureHunter')
+    state.TreasureMode:set('None')
 
+    state.HasteMode = M{['description']='Haste Mode', 'Normal', 'Hi', 'Trust'}
 
     blue_magic_maps = {}
     
     -- Mappings for gear sets to use for various blue magic spells.
     -- While Str isn't listed for each, it's generally assumed as being at least
     -- moderately signficant, even for spells with other mods.
-    
     -- Physical Spells --
     
     -- Physical spells with no particular (or known) stat mods
@@ -45,7 +48,7 @@ function job_setup()
     blue_magic_maps.PhysicalStr = S{
         'Battle Dance','Bloodrake','Death Scissors','Dimensional Death',
         'Empty Thrash','Quadrastrike','Sinker Drill','Spinal Cleave',
-        'Uppercut','Vertical Cleave'
+        'Uppercut','Vertical Cleave', 'Quadratic Continuum'
     }
         
     -- Physical spells with Dex stat mod
@@ -59,7 +62,8 @@ function job_setup()
     -- Physical spells with Vit stat mod
     blue_magic_maps.PhysicalVit = S{
         'Body Slam','Cannonball','Delta Thrust','Glutinous Dart','Grand Slam',
-        'Power Attack','Quad. Continuum','Sprout Smack','Sub-zero Smash'
+        'Power Attack','Quad. Continuum','Sprout Smack','Sub-zero Smash',
+        'Sweeping Gouge'
     }
         
     -- Physical spells with Agi stat mod
@@ -95,12 +99,16 @@ function job_setup()
         'Blastbomb','Blazing Bound','Bomb Toss','Cursed Sphere','Dark Orb','Death Ray',
         'Diffusion Ray','Droning Whirlwind','Embalming Earth','Firespit','Foul Waters',
         'Ice Break','Leafstorm','Maelstrom','Rail Cannon','Regurgitation','Rending Deluge',
-        'Retinal Glare','Subduction','Tem. Upheaval','Water Bomb'
+        'Retinal Glare','Subduction','Tem. Upheaval','Water Bomb', 'Tenebral Crush', 'Spectral Floe',
+        'Molting Plumage', 'Searing Tempest'
     }
 
+    blue_magic_maps.MagicalLight = S{
+        'Blinding Fulgor'
+    }
     -- Magical spells with a primary Mnd mod
     blue_magic_maps.MagicalMnd = S{
-        'Acrid Stream','Evryone. Grudge','Magic Hammer','Mind Blast'
+        'Acrid Stream','Evryone. Grudge','Magic Hammer','Mind Blast','Scouring Spate'
     }
 
     -- Magical spells with a primary Chr mod
@@ -110,12 +118,16 @@ function job_setup()
 
     -- Magical spells with a Vit stat mod (on top of Int)
     blue_magic_maps.MagicalVit = S{
-        'Thermal Pulse'
+        'Thermal Pulse', 'Entomb'
+    }
+
+    blue_magic_maps.MagicalAgi = S{
+        'Silent Storm'
     }
 
     -- Magical spells with a Dex stat mod (on top of Int)
     blue_magic_maps.MagicalDex = S{
-        'Charged Whisker','Gates of Hades'
+        'Charged Whisker','Gates of Hades','Anvil Lightning'
     }
             
     -- Magical spells (generally debuffs) that we want to focus on magic accuracy over damage.
@@ -153,7 +165,7 @@ function job_setup()
     -- Buffs that depend on blue magic skill
     blue_magic_maps.SkillBasedBuff = S{
         'Barrier Tusk','Diamondhide','Magic Barrier','Metallic Body','Plasma Charge',
-        'Pyric Bulwark','Reactor Cool',
+        'Pyric Bulwark','Reactor Cool','Nat. Meditation'
     }
 
     -- Other general buffs
@@ -172,7 +184,13 @@ function job_setup()
         'Crashing Thunder','Droning Whirlwind','Gates of Hades','Harden Shell','Polar Roar',
         'Pyric Bulwark','Thunderbolt','Tourbillion','Uproot'
     }
+    -- For th_action_check():
+    -- JA IDs for actions that always have TH: Provoke, Animated Flourish
+    info.default_ja_ids = S{35, 204}
+    -- Unblinkable JA IDs for actions that always have TH: Quick/Box/Stutter Step, Desperate/Violent Flourish
+    info.default_u_ja_ids = S{201, 202, 203, 205, 207}
 end
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- User setup functions for this job.  Recommend that these be overridden in a sidecar file.
@@ -180,11 +198,30 @@ end
 
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
-    state.OffenseMode:options('Normal', 'Learning', 'Acc')
+    state.OffenseMode:options('Normal', 'Mid', 'Acc', 'Learning')
+    state.HybridMode:options('Normal', 'PDT', 'EVA')
+    state.WeaponskillMode:options('Normal', 'Acc')
     state.CastingMode:options('Normal', 'Resistant')
-    state.IdleMode:options('Normal', 'EXP')
+    state.IdleMode:options('Normal', 'PDT', 'Learning')
 
+    -- Additional local binds
+    send_command('bind ^= gs c cycle treasuremode')
+    send_command('bind ^` input /ja "Chain Affinity" <me>')
+    send_command('bind !` input /ja "Efflux" <me>')
+    send_command('bind @` input /ja "Burst Affinity" <me>')
+    send_command('bind @f9 gs c cycle HasteMode')
+    send_command('bind @= gs c cycle SkillMode')
+
+    update_combat_form()
     select_default_macro_book()
+end
+
+-- Called when this job file is unloaded (eg: job change)
+function user_unload()
+    send_command('unbind ^`')
+    send_command('unbind !`')
+    send_command('unbind @`')
+    send_command('unbind @f9')
 end
 
 
@@ -199,8 +236,24 @@ function init_gear_sets()
     --------------------------------------
     -- Start defining the sets
     --------------------------------------
-
-    
+	HercFeet = {}
+    HercHead = {}
+    HercLegs = {}
+    HercHands = {}
+    HercBody = {}
+    sets.buff['Burst Affinity'] = { legs="Assimilator's Shalwar +1" }
+    sets.buff['Chain Affinity'] = {
+        --head="Mavi Kavuk +2", 
+        feet="Assimilator's Charuqs +1"
+    }
+    -- sets.buff.Convergence = {head="Luhlaza Keffiyeh"}
+    sets.buff.Diffusion = {feet="Luhlaza Charuqs"}
+    -- sets.buff.Enchainment = {body="Luhlaza Jubbah"}
+    -- sets.buff.Efflux = {legs="Mavi Tayt +2"}
+	
+	--Treasure hunter set
+	sets.TreasureHunter = {head="White rarab cap +1", waist="Chaac Belt", legs=HercLegs.TH}
+	
     -- Precast Sets
     
     -- Precast sets to enhance JAs
@@ -241,7 +294,13 @@ function init_gear_sets()
 		}
 		
 	sets.midcast['Blue Magic'].Healing = sets.midcast['Healing Magic']
-    
+    sets.self_healing = {
+		hands="Weatherspoon Cuffs +1",
+		ring1="Ephedra Ring",
+		ring2="Ephedra Ring",
+		back="Tempered Cape +1",
+		neck="Nesanica Torque"
+		}
     -- Physical Spells --
 
 
@@ -302,7 +361,7 @@ function init_gear_sets()
     sets.engaged = {ammo="Ginsen",
 	head="Jhakri Coronal",body="Jhakri Robe +1",hands="Jhakri Cuffs",legs="Herculean Trousers",
 		feet="Rawhide Boots",back="Atheling Mantle",neck="Clotharius Torque",waist="Twilight Belt",
-		ring1="Epona's Ring",ring2="Rajas Ring",ear1="zennaroi Earring",ear2="Suppanomimi"}
+		ring1="Epona's Ring",ring2="Rajas Ring",ear1="dedition Earring",ear2="Suppanomimi"}
 
     sets.engaged.Acc = set_combine(sets.engaged, {head="Alhazen Hat", legs="Herculean Trousers", feet="Despair Greaves", back="Grounded Mantle"})
 	
@@ -331,34 +390,109 @@ end
 -- Job-specific hooks for non-casting events.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Set eventArgs.handled to true if we don't want any automatic gear equipping to be done.
+-- Set eventArgs.useMidcastGear to true if we want midcast gear equipped on precast.
+function job_precast(spell, action, spellMap, eventArgs)
+    if unbridled_spells:contains(spell.english) and not state.Buff['Unbridled Learning'] then
+        eventArgs.cancel = true
+        windower.send_command('@input /ja "Unbridled Learning" <me>; wait 1.5; input /ma "'..spell.name..'" '..spell.target.name)
+    end
+    if spell.name == 'Spectral Jig' and buffactive.sneak then
+        -- If sneak is active when using, cancel before completion
+        send_command('cancel 71')
+    end
+    if string.find(spell.english, 'Utsusemi') then
+        if buffactive['Copy Image (3)'] or buffactive['Copy Image (4)'] then
+            cancel_spell()
+            eventArgs.cancel = true
+            return
+        end
+    end
+
+end
+
+-- Run after the default midcast() is done.
+-- eventArgs is the same one used in job_midcast, in case information needs to be persisted.
+function job_post_midcast(spell, action, spellMap, eventArgs)
+    -- Add enhancement gear for Chain Affinity, etc.
+    if spell.skill == 'Blue Magic' then
+        for buff,active in pairs(state.Buff) do
+            if active and sets.buff[buff] then
+                equip(sets.buff[buff])
+            end
+        end
+        if spellMap == 'Healing' and spell.target.type == 'SELF' and sets.self_healing then
+            equip(sets.self_healing)
+        end
+    end
+
+    -- If in learning mode, keep on gear intended to help with that, regardless of action.
+    if state.OffenseMode.value == 'Learning' then
+        equip(sets.Learning)
+    end
+end
+
+function job_aftercast(spell, action, spellMap, eventArgs)
+    if spell.name == 'Pollen' and state.SkillMode.value == 'On' then
+        windower.send_command('wait 3; input /ma "'..spell.name..'" '..spell.target.name)
+    end
+end
+
 function job_state_change(stateField, newValue, oldValue)
-	if stateField == 'Offense Mode' then
-		if newValue == 'Normal' then
-			enable('hands', 'body', 'head')
-			equip(sets.engaged.Normal)
-		elseif newValue == 'Acc' then
-			enable('hands', 'body', 'head')
-			equip(sets.engaged.Normal.Acc)
-		elseif newValue == 'Learning' then
-			equip(sets.engaged.Learning)
-			disable('hands', 'body', 'head')
-		end
-	end
-	if stateField == 'IdleMode' then
-		if newValue == 'Normal' then
-			enable('back')
-			equip(sets.idle.Normal)
-		elseif newValue == 'EXP' then
-			equip(sets.idle.EXP)
-			disable('back')
-		end
-	end
+	
 end
 
 -------------------------------------------------------------------------------------------------------------------
 -- User code that supplements standard library decisions.
 -------------------------------------------------------------------------------------------------------------------
 
+-- Called when a player gains or loses a buff.
+-- buff == buff gained or lost
+-- gain == true if the buff was gained, false if it was lost.
+function job_buff_change(buff, gain)
+    if state.Buff[buff] ~= nil then
+        state.Buff[buff] = gain
+    end
+    -- If we gain or lose any haste buffs, adjust which gear set we target.
+    if S{'haste', 'march', 'mighty guard', 'embrava', 'haste samba', 'geo-haste', 'indi-haste'}:contains(buff:lower()) then
+        --determine_haste_group()
+        if not midaction() then
+            handle_equipping_gear(player.status)
+        end
+    end
+    if buff:startswith('Aftermath') then
+        if player.equipment.main == 'Tizona' then
+            classes.CustomMeleeGroups:clear()
+
+            if (buff == "Aftermath: Lv.3" and gain) or buffactive['Aftermath: Lv.3'] then
+                classes.CustomMeleeGroups:append('AM3')
+                add_to_chat(8, '-------------AM3 UP-------------')
+            end
+
+            if not midaction() then
+                handle_equipping_gear(player.status)
+            end
+        end
+    end
+
+end
+
+-------------------------------------------------------------------------------------------------------------------
+-- User code that supplements standard library decisions.
+-------------------------------------------------------------------------------------------------------------------
+
+-- Custom spell mapping.
+-- Return custom spellMap value that can override the default spell mapping.
+-- Don't return anything to allow default spell mapping to be used.
+function job_get_spell_map(spell, default_spell_map)
+    if spell.skill == 'Blue Magic' then
+        for category,spell_list in pairs(blue_magic_maps) do
+            if spell_list:contains(spell.english) then
+                return category
+            end
+        end
+    end
+end
 
 -- Modify the default idle set after it was constructed.
 function customize_idle_set(idleSet)
@@ -366,6 +500,30 @@ function customize_idle_set(idleSet)
         set_combine(idleSet, sets.latent_refresh)
     end
     return idleSet
+end
+
+function check_buff(buff_name, eventArgs)
+    if state.Buff[buff_name] then
+        equip(sets.buff[buff_name] or {})
+        if state.TreasureMode.value == 'SATA' or state.TreasureMode.value == 'Fulltime' then
+            equip(sets.TreasureHunter)
+        end
+        eventArgs.handled = true
+    end
+end
+
+-- Check for various actions that we've specified in user code as being used with TH gear.
+-- This will only ever be called if TreasureMode is not 'None'.
+-- Category and Param are as specified in the action event packet.
+function th_action_check(category, param)
+    if category == 2 or -- any ranged attack
+        --category == 4 or -- any magic action
+        (category == 3 and param == 30) or -- Aeolian Edge
+        (category == 6 and info.default_ja_ids:contains(param)) or -- Provoke, Animated Flourish
+        (category == 14 and info.default_u_ja_ids:contains(param)) -- Quick/Box/Stutter Step, Desperate/Violent Flourish
+        then 
+            return true
+    end
 end
 
 -- Called by the 'update' self-command, for common needs.
@@ -379,6 +537,12 @@ end
 -- Utility functions specific to this job.
 -------------------------------------------------------------------------------------------------------------------
 
+function update_combat_form()
+    -- Check for H2H or single-wielding
+    --if player.equipment.sub == "Genbu's Shield" or player.equipment.sub == 'empty' then
+    --    state.CombatForm:reset()
+    --end
+end
 
 -- Select default macro book on initial load or subjob change.
 function select_default_macro_book()
