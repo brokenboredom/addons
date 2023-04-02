@@ -4,10 +4,10 @@ return {
             ["Sword"] = {
                 ["hps"] = {
                     ["<"] = 100,
-                    [">"] = 20
+                    [">"] = 5
                 },
                 ["mobs"] = {},
-                ["ws_cmd"] = "/ws \"circle_blade\" <t>"
+                ["ws_cmd"] = "/ws \"chant du cygne\" <t>"
             }
         },
         ["SMN"] = {

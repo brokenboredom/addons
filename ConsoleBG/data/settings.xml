@@ -16,4 +16,10 @@
             <y>0</y>
         </pos>
     </global>
+    <happlo>
+        <pos>
+            <x>15</x>
+            <y>50</y>
+        </pos>
+    </happlo>
 </settings>
